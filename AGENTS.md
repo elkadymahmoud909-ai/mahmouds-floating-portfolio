@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- All editable content (profile, contact settings, skills, projects, journey) lives in `src/config/site.ts`; components read from it so updates never touch layout code.
+- Contact links are built only by `getContactChannels` in `src/lib/contact.ts`; a channel with `href: null` renders as an inactive "awaiting approval" button, so unapproved channels can never leak a destination.
+- The 3D world (`src/components/three/Scene3D.tsx`) is lazy-loaded client-only after the intro finishes, because three.js cannot run during SSR and would stall the loader.
+- The site is one scrolling page with in-page section anchors, because the brief explicitly asks for smooth-scroll navigation between sections.
